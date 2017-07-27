@@ -56,35 +56,6 @@ class UserRegisterBiz{
                         
                         // バックグラウンドだとUIの処理が出来ないので、メインスレッドでUIの処理を行わせる.
                         
-                        
-                        DispatchQueue.main.async(execute: {
-                            /*let top = json as! NSArray
-                            for roop in top{
-                                let next = roop as! NSDictionary
-                                print(next["user_id"] as! String) // 1, 2 が表示
-                                print(next["list_title"] as! String)
-                                print(next["url"] as! String) // 25, 20 が表示
-                            }*/
-                            
-                            
-                            /*// パースしたJSONデータへのアクセス.
-                             for _value in json {
-                             let key: String = _value.key as! String
-                             let value: Any = _value.value
-                             
-                             if String(describing: type(of: value)) == "__NSDictionaryI" {
-                             for valueData in value as! NSDictionary {
-                             let dataKey = valueData.key as! String
-                             let date = valueData.value as! String
-                             
-                             print("key:\(dataKey) value:\(date)")
-                             }
-                             }
-                             print("key:\(key) value:\(value)")
-                             }*/
-                            
-                        })
-                        
                     } catch {
                         print("error")
                         print(error)

@@ -82,7 +82,7 @@ class RegisterView: UIViewController {
         // 登録が完了したらアラートを表示し、登録画面へ戻る
         let completeAlert = UIAlertController(title: "登録完了", message: "登録が完了しました。", preferredStyle: .alert)
         completeAlert.addAction(UIAlertAction(title: "OK", style: .default){action in
-            print("戻るよ")
+            self.naviController?.popViewController(animated: true)
         })
         self.present(completeAlert, animated: true, completion: nil)
     }
@@ -93,19 +93,6 @@ class RegisterView: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    /*override func viewWillAppear(_ animated: Bool) {
-        if (self.window?.rootViewController != nil){
-            
-        }
-        else{
-            // ナビゲーションバーの設定
-            naviController = UINavigationController(rootViewController:self)
-            self.window = UIWindow(frame: UIScreen.main.bounds);
-            self.window?.rootViewController = naviController
-            self.window!.makeKeyAndVisible();
-        }
-    }*/
     
     /*
     // MARK: - Navigation

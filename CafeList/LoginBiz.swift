@@ -13,13 +13,18 @@ class LoginBiz{
         
     }
     
-    func jsonPost(loginID: String, password: String){
+    func jsonPost(loginID: String, password: String) -> NSDictionary{
         //JSONデータ作成
         let myDict:NSMutableDictionary = NSMutableDictionary()
         myDict.setObject(loginID, forKey: "userID" as NSCopying)
         myDict.setObject(password, forKey: "password" as NSCopying)
         
         var json: NSData!
+        
+        var loginUserData = NSDictionary()
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
         //JSONに変換可能かチェック
         if JSONSerialization.isValidJSONObject(myDict){
             do{
@@ -33,7 +38,7 @@ class LoginBiz{
             
             //HTTP通信のリクエスト生成
             let config:URLSessionConfiguration = .default
-            let url:URL = URL(string: Const.FETCH_LIST_API)!
+            let url:URL = URL(string: Const.LOGIN_API_URL)!
             let request:NSMutableURLRequest = NSMutableURLRequest(url: url)
             let session : URLSession = URLSession(configuration: config)
             
@@ -45,55 +50,30 @@ class LoginBiz{
             //jsonデータのセット
             request.httpBody = data.data(using: String.Encoding.utf8.rawValue)
             
-            let task:URLSessionDataTask = session.dataTask(with: request as URLRequest, completionHandler: {(data, response, error) -> Void in
+            let task:URLSessionDataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {(data, response, error) -> Void in
                 
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.global(qos: .default).sync(execute: {
                     print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String)
                     
                     do {
                         // 受け取ったJSONデータをパースする.
                         let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
                         
-                         // バックグラウンドだとUIの処理が出来ないので、メインスレッドでUIの処理を行わせる.
-                        
-                        
-                        DispatchQueue.main.async(execute: {
-                            let top = json as! NSArray
-                            for roop in top{
-                                let next = roop as! NSDictionary
-                                print(next["id"] as! String) // 1, 2 が表示
-                                print(next["list_title"] as! String)
-                                print(next["url"] as! String) // 25, 20 が表示
-                            }
-                            
-                            
-                            /*// パースしたJSONデータへのアクセス.
-                            for _value in json {
-                                let key: String = _value.key as! String
-                                let value: Any = _value.value
-                                
-                                if String(describing: type(of: value)) == "__NSDictionaryI" {
-                                    for valueData in value as! NSDictionary {
-                                        let dataKey = valueData.key as! String
-                                        let date = valueData.value as! String
-                                        
-                                        print("key:\(dataKey) value:\(date)")
-                                    }
-                                }
-                                print("key:\(key) value:\(value)")
-                            }*/
-                            
-                        })
+                        loginUserData = json as! NSDictionary
                         
                     } catch {
                         print("error")
                         print(error)
                     }
                 })
+                semaphore.signal()
             })
             
             task.resume()
+            semaphore.wait()
         }
+        
+        return loginUserData
     }
     
     

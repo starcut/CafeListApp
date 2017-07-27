@@ -87,11 +87,29 @@ class LoginView: UIViewController,URLSessionDelegate,URLSessionDataDelegate,URLS
     ///
     /// - Parameter sender: <#sender description#>
     func loginButtonClick(sender :UIButton){
-        loginBiz.jsonPost(loginID: (loginIdText?.text)!, password: (passwordText?.text)!)
+        if((loginIdText?.text)! == "" || (passwordText?.text)! == ""){
+            let loginErrorAlert = UIAlertController(title: "ログインエラー", message: "ユーザIDまたはパスワードが入力されていません。", preferredStyle: .alert)
+            loginErrorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(loginErrorAlert, animated: true, completion: nil)
+            
+            return
+        }
         
-        let caftListView :UITableViewController = CafeListMainView()
-        caftListView.modalTransitionStyle = .crossDissolve
-        self.present(caftListView, animated: true, completion: nil)
+        var loginUserData = NSDictionary()
+        loginUserData = loginBiz.jsonPost(loginID: (loginIdText?.text)!, password: (passwordText?.text)!)
+        
+        var userIdNumber = loginUserData["id"] as! Int
+        
+        if userIdNumber != -1 {
+            let caftListView  = CafeListMainView()
+            caftListView.modalTransitionStyle = .crossDissolve
+            self.present(caftListView, animated: true, completion: nil)
+        }
+        else{
+            let loginErrorAlert = UIAlertController(title: "ログインエラー", message: "ユーザIDまたはパスワードが違います。", preferredStyle: .alert)
+            loginErrorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(loginErrorAlert, animated: true, completion: nil)
+        }
     }
     
     /// ログインボタンを押下した場合の処理

@@ -13,10 +13,15 @@ class CafeListMainView: UITableViewController {
     
     var cafeListBiz = CafeListBiz()
     var naviController :UINavigationController?
-
+    
+    var cafeLists = Array<NSDictionary>()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        cafeLists = cafeListBiz.getListItemsFromServer()
+        
         self.tableView!.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         // Uncomment the following line to preserve selection between presentations
@@ -50,15 +55,15 @@ class CafeListMainView: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return CafeListBiz.listItems.count
+        return cafeLists.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
 
-        //cell.textLabel!.text = "\(CafeListBiz.listItems[indexPath.row])"
-        cell.detailTextLabel?.text = "URL"
+        cell.textLabel!.text = "\(cafeLists[indexPath.row]["list_title"]!)"
+        cell.detailTextLabel?.text = "\(cafeLists[indexPath.row]["address"]!)"
         
         return cell
     }
@@ -69,7 +74,8 @@ class CafeListMainView: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // セルがタップされた時の処理
         
-        let cafeListDetailView: UIViewController = CafeListDetailView()
+        let cafeListDetailView = CafeListDetailView()
+        cafeListDetailView.setCafeData(cafeInfo: cafeLists[indexPath.row])
         cafeListDetailView.modalTransitionStyle = .crossDissolve
         self.naviController?.pushViewController(cafeListDetailView, animated: true)
     }
@@ -79,8 +85,6 @@ class CafeListMainView: UITableViewController {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    
-
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

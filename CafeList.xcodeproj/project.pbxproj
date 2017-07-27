@@ -17,6 +17,7 @@
 		FC0D8DB31EE80D3A002E0538 /* LoginBiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D8DB21EE80D3A002E0538 /* LoginBiz.swift */; };
 		FC0D8DB51EE83708002E0538 /* CafeListMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D8DB41EE83708002E0538 /* CafeListMainView.swift */; };
 		FC0D8DB71EE971C5002E0538 /* CafeListBiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D8DB61EE971C5002E0538 /* CafeListBiz.swift */; };
+		FC308B051F287E99003AE492 /* CafeListDetailBiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC308B041F287E99003AE492 /* CafeListDetailBiz.swift */; };
 		FC44D2611F07724B00372794 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC44D2601F07724B00372794 /* RegisterView.swift */; };
 		FC44D2631F0F99D700372794 /* CafeListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC44D2621F0F99D700372794 /* CafeListDetailView.swift */; };
 		FC9CDD091F270C840015625B /* UserRegisterBiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CDD081F270C840015625B /* UserRegisterBiz.swift */; };
@@ -59,6 +60,7 @@
 		FC0D8DB21EE80D3A002E0538 /* LoginBiz.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginBiz.swift; sourceTree = "<group>"; };
 		FC0D8DB41EE83708002E0538 /* CafeListMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeListMainView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		FC0D8DB61EE971C5002E0538 /* CafeListBiz.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeListBiz.swift; sourceTree = "<group>"; };
+		FC308B041F287E99003AE492 /* CafeListDetailBiz.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeListDetailBiz.swift; sourceTree = "<group>"; };
 		FC44D2601F07724B00372794 /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		FC44D2621F0F99D700372794 /* CafeListDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeListDetailView.swift; sourceTree = "<group>"; };
 		FC9CDD081F270C840015625B /* UserRegisterBiz.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegisterBiz.swift; sourceTree = "<group>"; };
@@ -148,9 +150,10 @@
 			isa = PBXGroup;
 			children = (
 				FC0D8DB21EE80D3A002E0538 /* LoginBiz.swift */,
-				FCC358CD1F1A146E00D78FAF /* ListDataRegisterBiz.swift */,
 				FC0D8DB61EE971C5002E0538 /* CafeListBiz.swift */,
+				FCC358CD1F1A146E00D78FAF /* ListDataRegisterBiz.swift */,
 				FC9CDD081F270C840015625B /* UserRegisterBiz.swift */,
+				FC308B041F287E99003AE492 /* CafeListDetailBiz.swift */,
 			);
 			name = Biz;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				FC0D8DB51EE83708002E0538 /* CafeListMainView.swift in Sources */,
 				FC9CDD091F270C840015625B /* UserRegisterBiz.swift in Sources */,
 				FCC358D11F1A160300D78FAF /* UserData.swift in Sources */,
+				FC308B051F287E99003AE492 /* CafeListDetailBiz.swift in Sources */,
 				FCC358D31F1A187100D78FAF /* CafeInfomation.swift in Sources */,
 				FC0D03961EEB860900043425 /* ListDataRegisterView.swift in Sources */,
 				FC44D2631F0F99D700372794 /* CafeListDetailView.swift in Sources */,

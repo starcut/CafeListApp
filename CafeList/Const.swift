@@ -28,7 +28,7 @@ class Const{
     public static let REGISTER_USER_API_URL : String = "http://seeking-star.com/APIs/RegisterUserAPI.php";
     
     /// リストを表示する処理を行うAPIのURL
-    public static let FETCH_LIST_API : String = "http://seeking-star.com/APIs/FetchAllCafeListAPI.php.php";
+    public static let FETCH_LIST_API : String = "http://seeking-star.com/APIs/FetchAllCafeListAPI.php";
     
     /// 新しいリストを登録する処理を行うAPIのURL
     public static let REGISTER_LIST_API : String = "http://seeking-star.com/APIs/AddCafeListAPI.php";
