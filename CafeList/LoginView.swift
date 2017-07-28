@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class LoginView: UIViewController,URLSessionDelegate,URLSessionDataDelegate,URLSessionDownloadDelegate {
     var window: UIWindow?
     var naviController :UINavigationController?
@@ -29,8 +30,6 @@ class LoginView: UIViewController,URLSessionDelegate,URLSessionDataDelegate,URLS
     /// メイン処理
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
         
         self.view.backgroundColor = UIColor.white;
         
@@ -83,10 +82,12 @@ class LoginView: UIViewController,URLSessionDelegate,URLSessionDataDelegate,URLS
     }
 
     
+    
     /// ログインボタンを押下した場合の処理
     ///
     /// - Parameter sender: <#sender description#>
     func loginButtonClick(sender :UIButton){
+        // IDパスワード
         if((loginIdText?.text)! == "" || (passwordText?.text)! == ""){
             let loginErrorAlert = UIAlertController(title: "ログインエラー", message: "ユーザIDまたはパスワードが入力されていません。", preferredStyle: .alert)
             loginErrorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -98,7 +99,7 @@ class LoginView: UIViewController,URLSessionDelegate,URLSessionDataDelegate,URLS
         var loginUserData = NSDictionary()
         loginUserData = loginBiz.jsonPost(loginID: (loginIdText?.text)!, password: (passwordText?.text)!)
         
-        var userIdNumber = loginUserData["id"] as! Int
+        let userIdNumber = loginUserData["id"] as! Int
         
         if userIdNumber != -1 {
             let caftListView  = CafeListMainView()
@@ -112,15 +113,12 @@ class LoginView: UIViewController,URLSessionDelegate,URLSessionDataDelegate,URLS
         }
     }
     
-    /// ログインボタンを押下した場合の処理
+    /// 新規登録ボタンを押下した場合の処理
     ///
     /// - Parameter sender: <#sender description#>
     func registerButtonClick(sender :UIButton){
-        
-        
-        let registerView :UIViewController = RegisterView()
+        let registerView :RegisterView = RegisterView()
         registerView.modalTransitionStyle = .crossDissolve
-        //self.present(registerView, animated: true, completion: nil)
         
         self.naviController?.pushViewController(registerView, animated: true)
     }

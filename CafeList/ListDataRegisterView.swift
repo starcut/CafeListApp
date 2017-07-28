@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListDataRegisterView: UIViewController{
+class ListDataRegisterView: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     var cafeListData : ListDataRegisterBiz!
     
     var cafeListInfo : CafeInfomation!
@@ -19,12 +19,14 @@ class ListDataRegisterView: UIViewController{
     
     var addressText : UITextField!
     
-    var openTimeLabel : UILabel!
+    var openTimeLabel : UITextField!
     
-    var closeTimeLabel : UILabel!
+    var closeTimeLabel : UITextField!
     
     var smokeTitleLabel : UILabel!
     
+    let smokeItems = ["禁煙", "分煙", "喫煙"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         cafeListData = ListDataRegisterBiz()
@@ -84,12 +86,17 @@ class ListDataRegisterView: UIViewController{
         operationTimeTitleLabel.text = "営業時間"
         self.view.addSubview(operationTimeTitleLabel)
         
-        openTimeLabel = UILabel(frame: CGRect(x: 40, y: 440, width: 100, height: uiHeight))
+        openTimeLabel = UITextField(frame: CGRect(x: 40, y: 440, width: 100, height: uiHeight))
         openTimeLabel.text = "9:00"
+        openTimeLabel.borderStyle = .roundedRect
+        
+        openTimeLabel.delegate = self
+        
         self.view.addSubview(openTimeLabel)
         
-        closeTimeLabel = UILabel(frame: CGRect(x: 180, y: 440, width: 100, height: uiHeight))
+        closeTimeLabel = UITextField(frame: CGRect(x: 180, y: 440, width: 100, height: uiHeight))
         closeTimeLabel.text = "23:00"
+        closeTimeLabel.borderStyle = .roundedRect
         self.view.addSubview(closeTimeLabel)
         
         // 禁煙喫煙に関する情報
@@ -99,16 +106,55 @@ class ListDataRegisterView: UIViewController{
         
         // スイッチとか？
         
-        let smokeEditButton : UIButton = UIButton(frame: CGRect(x: 240, y: 490, width: 200, height: uiHeight))
-        smokeEditButton.setTitle("編集", for: .normal)
+        let smokeEditButton : UITextField = UITextField(frame: CGRect(x: 240, y: 490, width: 200, height: uiHeight))
+        smokeEditButton.text = "編集"
         smokeEditButton.backgroundColor = UIColor.magenta
+        smokeEditButton.borderStyle = .roundedRect
+        
+        smokeEditButton.delegate = self
+        
         self.view.addSubview(smokeEditButton)
         
+        // 登録ボタン
         let registerButton: UIButton = UIButton(frame: CGRect(x: 40, y: 550, width: 200, height: uiHeight))
         registerButton.setTitle("登録", for: .normal)
         registerButton.backgroundColor = UIColor.blue
         registerButton.addTarget(self, action: #selector(clickRegisterButton), for: .touchUpInside)
         self.view.addSubview(registerButton)
+        
+        // 時間設定用のDatePicker
+        let settingTimePicker = UIDatePicker()
+        settingTimePicker.datePickerMode = .time
+        openTimeLabel.inputView = settingTimePicker
+        closeTimeLabel.inputView = settingTimePicker
+        //キーボードに表示するツールバー
+        let pickerToolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height * 0.16, width: self.view.frame.size.width, height: 40))
+        pickerToolBar.layer.position = CGPoint(x: self.view.frame.size.width * 0.5, y: self.view.frame.size.height - 20.0)
+        pickerToolBar.barStyle = .blackTranslucent
+        pickerToolBar.tintColor = UIColor.white
+        pickerToolBar.backgroundColor = UIColor.black
+        
+        // ツールバーのボタン
+        //右寄せのためのスペース
+        let spaceBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        //完了ボタン
+        let fixButton = UIBarButtonItem(title: "完了", style: .done, target: self, action: #selector(clickFixButton(sender:)))
+        pickerToolBar.items = [spaceBarButton, fixButton]
+        openTimeLabel.inputAccessoryView = pickerToolBar
+        closeTimeLabel.inputAccessoryView = pickerToolBar
+        
+        
+        // 喫煙設定用のDatePicker
+        let settingSmokePicker = UIPickerView()
+        settingSmokePicker.delegate = self
+        settingSmokePicker.dataSource = self
+        smokeEditButton.inputView = settingSmokePicker
+        
+        smokeEditButton.inputAccessoryView = pickerToolBar
+    }
+    
+    func clickFixButton(sender: UIBarButtonItem){
+        self.view.endEditing(true)
     }
     
     func clickRegisterButton(sender: UIButton){
@@ -135,6 +181,22 @@ class ListDataRegisterView: UIViewController{
             
         })
         self.present(completeAlert, animated: true, completion: nil)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return smokeItems[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return smokeItems.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(smokeItems[row])
     }
     
     /*
